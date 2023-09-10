@@ -6,7 +6,7 @@
 
 function Reset-Homedir([System.Object] $Users, [string] $Share) {
     $count = $Users.Count
-    Write-Host Počet uživatelů pro nastavení: $count
+    Write-Host Number of users to process: $count
     $Users | ForEach-Object {
         $homeDirectory = $Share + $_.SamAccountName;
         Write-Host $count $_.SamAccountName $homeDirectory
@@ -16,7 +16,7 @@ function Reset-Homedir([System.Object] $Users, [string] $Share) {
     }
 }
 
-#$users = Get-ADUser -Filter * -SearchBase "OU=2023,OU=Žáci,OU=Eso-cl Users Office365 sync,DC=eso-cl,DC=cz"
+# get users from context and set apropriate HomeDirectory
 $users = Get-ADUser -Filter * -SearchBase "OU=Žáci,OU=Eso-cl Users Office365 sync,DC=eso-cl,DC=cz"
 Reset-Homedir -Users $users -Share '\\srvfs01\Home$\'
 
@@ -29,5 +29,3 @@ Reset-Homedir -Users $users -Share '\\srvfs01\Home_U$\'
 
 $users = Get-ADUser -Filter * -SearchBase "OU=Učitelé,OU=Eso-cl Users Office365 sync,DC=eso-cl,DC=cz"
 Reset-Homedir -Users $users -Share '\\srvfs01\Home_U$\'
-
-#exit
